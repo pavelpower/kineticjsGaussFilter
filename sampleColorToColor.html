@@ -2,71 +2,49 @@
 <html>
 <head>
     <style>
-        body { margin: 0px; padding: 0px; }
+        body { margin: 0px; padding: 0px; background-color: #000000; }
     </style>
     <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.3.1.js"></script>
-    <script src="https://raw.github.com/pavelpower/kineticjsGaussFilter/master/Gauss.js"></script>
+    <script src="/ColorToColor.js"></script>
 </head>
 <body>
 <div id="container"></div>
 <script>
     (function() {
-        var stage, layer, imageObj, yoda, filteredYoda, filteredGaussYoda;
-
-        stage = new Kinetic.Stage({
+        var stage = new Kinetic.Stage({
             container: 'container',
             width: 578,
-            height: 400
+            height: 200
         });
+        var layer = new Kinetic.Layer();
 
-        layer = new Kinetic.Layer();
+        stage.add(layer);
 
-        imageObj = new Image();
+        var imageObj = new Image();
 
         imageObj.onload = function() {
 
-            yoda = new Kinetic.Image({
-                x: 20, y: 0,
+            var filteredImage = new Kinetic.Image({
+                x: 10,
+                y: 10,
                 image: imageObj,
                 width: 106,
                 height: 118
             });
 
-            filteredYoda = new Kinetic.Image({
-                x: 140, y: 0,
-                image: imageObj,
-                width: 106,
-                height: 118
-            });
+            layer.add(filteredImage);
 
-            filteredGaussYoda = new Kinetic.Image({
-                x: 140, y: 140,
-                image: imageObj,
-                width: 106,
-                height: 118
-            });
-
-            // add the shape to the layer
-            layer.add(yoda);
-            layer.add(filteredYoda);
-            layer.add(filteredGaussYoda);
-
-            // add the layer to the stage
-            stage.add(layer);
-
-            // apply grayscale filter to second image
-            filteredYoda.applyFilter( Kinetic.Filters.Grayscale, null, function() {
-                layer.draw();
-            });
-
-            //applyFilter(config, filter, config, callback)
-            filteredGaussYoda.applyFilter( Kinetic.Filters.Gauss, { radius: 20 }, function() {
+            filteredImage.applyFilter(Kinetic.Filters.ColorToColor, {
+                color: '#ff0000',
+                toColor: '#ff0000bb',
+                interval: 60
+            }, function(img) {
                 layer.draw();
             });
         };
+        imageObj.src = '/img.png';
+    }) ();
 
-        imageObj.src = 'http://www.html5canvastutorials.com/demos/assets/yoda.jpg';
-    })();
 </script>
 </body>
 </html>
