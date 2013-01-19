@@ -7,7 +7,7 @@ Program is taken from the site http://www.quasimondo.com/StackBlurForCanvas
 
 Development: Mario Klingeman
 
-Adapting a KineticJS: Pavel Akhmetchanov
+Adapting under KineticJS: Pavel Akhmetchanov
 
 ```javascript
 
